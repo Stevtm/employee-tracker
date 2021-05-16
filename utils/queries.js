@@ -77,4 +77,40 @@ async function getDepartments() {
 	return result;
 }
 
-module.exports = { viewDepartments, viewRoles, viewEmployees, getDepartments };
+// query to return role titles and an array of departments
+async function getRoles() {
+	// get roles
+	const sql1 = `SELECT role.title FROM role`;
+	let result = {};
+
+	await db
+		.promise()
+		.query(sql1)
+		.then(([rows, fields]) => {
+			result[1] = rows;
+		})
+		.catch(console.log);
+
+	// get departments
+	const sql2 = `SELECT department.name FROM department`;
+
+	await db
+		.promise()
+		.query(sql2)
+		.then(([rows, fields]) => {
+			result[2] = rows.map((row) => {
+				return row.name;
+			});
+		})
+		.catch(console.log);
+
+	return result;
+}
+
+module.exports = {
+	viewDepartments,
+	viewRoles,
+	viewEmployees,
+	getDepartments,
+	getRoles,
+};

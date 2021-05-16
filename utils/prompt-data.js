@@ -3,6 +3,7 @@ const {
 	validateNotNull,
 	validateNewDepartment,
 	validateNewRole,
+	validateUpdatedRole,
 	validateNewManager,
 } = require("./input-validation");
 
@@ -39,6 +40,38 @@ const addDepartmentQuestions = (departmentsArray) => {
 					validateNewDepartment(departmentsArray, input)
 				);
 			},
+		},
+	];
+};
+
+// add role questions
+const addRoleQuestions = (dbData) => {
+	const roles = dbData[1];
+	const departments = dbData[2];
+	return [
+		{
+			type: "input",
+			name: "roleTitle",
+			message: "What is the role title? ",
+			validate: (input) => {
+				return (
+					validateNotNull(input, "role title") && validateNewRole(roles, input)
+				);
+			},
+		},
+		{
+			type: "input",
+			name: "roleSalary",
+			message: "Please enter the salary for this role.",
+			validate: (input) => {
+				return validateNotNull(input, "salary");
+			},
+		},
+		{
+			type: "list",
+			name: "roleDepartment",
+			message: "Please select the department that this role belongs to.",
+			choices: departments,
 		},
 	];
 };
@@ -144,6 +177,7 @@ module.exports = {
 	actions,
 	addDepartmentQuestions,
 	addEmployeeQuestions,
+	addRoleQuestions,
 	removeEmployeeQuestions,
 	getUpdateEmployee,
 	updateManagerQuestions,

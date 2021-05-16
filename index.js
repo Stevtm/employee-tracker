@@ -5,12 +5,14 @@ const {
 	actions,
 	addDepartmentQuestions,
 	addEmployeeQuestions,
+	addRoleQuestions,
 } = require("./utils/prompt-data");
 const {
 	viewEmployees,
 	viewRoles,
 	viewDepartments,
 	getDepartments,
+	getRoles,
 } = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
@@ -28,12 +30,14 @@ const promptActions = () => {
 				viewEmployees().then(promptActions);
 				break;
 			case "Add a Department":
-				getDepartments().then((departments) => {
-					promptAddDepartment(departments);
+				getDepartments().then((dbData) => {
+					promptAddDepartment(dbData);
 				});
 				break;
 			case "Add a Role":
-				console.log("In Add a Role");
+				getRoles().then((dbData) => {
+					promptAddRole(dbData);
+				});
 				break;
 			case "Add an Employee":
 				console.log("In Add an Employee");
@@ -53,6 +57,13 @@ const promptAddDepartment = (departmentsArray) => {
 		.then((data) => {
 			console.log(data);
 		});
+};
+
+// prompts for new role data
+const promptAddRole = (rolesArray) => {
+	return inquirer
+		.prompt(addRoleQuestions(rolesArray))
+		.then((data) => console.log(data));
 };
 
 // prompts for new emmployee data

@@ -1,3 +1,4 @@
+// validate that the input is not null (blank)
 const validateNotNull = (input, str) => {
 	if (!input) {
 		console.log(`You must enter a ${str}.`);
@@ -7,6 +8,7 @@ const validateNotNull = (input, str) => {
 	return true;
 };
 
+// validate that the entered department does not already exist in the database
 const validateNewDepartment = (departmentsArray, newDepartment) => {
 	let response = true;
 
@@ -21,7 +23,25 @@ const validateNewDepartment = (departmentsArray, newDepartment) => {
 	return response;
 };
 
-const validateNewRole = (updateEmployee) => {
+// validate that the entered role does not aready exist in the database
+const validateNewRole = (rolesArray, newRole) => {
+	let response = true;
+
+	rolesArray.forEach((role) => {
+		if (role.title === newRole) {
+			response = false;
+			console.log(
+				" --- A role with this title already exists in the database. ---"
+			);
+			return;
+		}
+	});
+
+	return response;
+};
+
+// validate that the updated role is different than the employee's current role
+const validateUpdatedRole = (updateEmployee) => {
 	if (updateEmployee.role === updatedRole) {
 		console.log(
 			" --- Please select a role that is different than the employee's current role. ---"
@@ -50,5 +70,6 @@ module.exports = {
 	validateNotNull,
 	validateNewDepartment,
 	validateNewRole,
+	validateUpdatedRole,
 	validateNewManager,
 };
