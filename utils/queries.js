@@ -236,6 +236,49 @@ async function createEmployee(newEmployee) {
 	await db.promise().query(sql3, params);
 }
 
+// query to update employee role
+async function updateEmployee(newData) {
+	const { employeeToUpdateRole: employee_full, updatedRole: role } = newData;
+	const employee = employee_full.split(" ");
+
+	// get the ID of the employee being updated
+	let employeeID;
+	const sql1 = `SELECT employee.id, employee.first_name, employee.last_name
+                    FROM employee`;
+
+	await db
+		.promise()
+		.query(sql1)
+		.then(([rows, fields]) => {
+			rows.forEach((row) => {
+				if (row.first_name == employee[0] && row.last_name == employee[1]) {
+					employeeID = row.id;
+				}
+			});
+		});
+
+	// get the ID of the new role
+	let roleID;
+	const sql2 = `SELECT role.id, role.title FROM role`;
+
+	await db
+		.promise()
+		.query(sql2)
+		.then(([rows, fields]) => {
+			rows.forEach((row) => {
+				if (row.title === role) {
+					roleID = row.id;
+				}
+			});
+		});
+
+	// update the role of the employee
+	const sql3 = `UPDATE employee SET role_id = ? WHERE id = ?`;
+	const params = [roleID, employeeID];
+
+	await db.promise().query(sql3, params);
+}
+
 module.exports = {
 	viewDepartments,
 	viewRoles,
@@ -246,4 +289,5 @@ module.exports = {
 	createDepartment,
 	createRole,
 	createEmployee,
+	updateEmployee,
 };

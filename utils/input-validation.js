@@ -40,36 +40,8 @@ const validateNewRole = (rolesArray, newRole) => {
 	return response;
 };
 
-// validate that the updated role is different than the employee's current role
-const validateUpdatedRole = (updateEmployee) => {
-	if (updateEmployee.role === updatedRole) {
-		console.log(
-			" --- Please select a role that is different than the employee's current role. ---"
-		);
-		return false;
-	}
-
-	return true;
-};
-
-const validateNewManager = (updateEmployee) => {
-	if (updateEmployee.manager === updatedManager) {
-		console.log(
-			"Please select a manager that is different than the employee's current manager"
-		);
-		return false;
-	} else if (updateEmployee.manager === updateEmployee.id) {
-		console.log("You cannot select an employee as their own manager.");
-		return false;
-	}
-
-	return true;
-};
-
 module.exports = {
 	validateNotNull,
 	validateNewDepartment,
 	validateNewRole,
-	validateUpdatedRole,
-	validateNewManager,
 };

@@ -6,6 +6,7 @@ const {
 	addDepartmentQuestions,
 	addEmployeeQuestions,
 	addRoleQuestions,
+	updateRoleQuestions,
 } = require("./utils/prompt-data");
 const {
 	viewEmployees,
@@ -17,6 +18,7 @@ const {
 	createDepartment,
 	createRole,
 	createEmployee,
+	updateEmployee,
 } = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
@@ -49,7 +51,9 @@ const promptActions = () => {
 				});
 				break;
 			case "Update an Employee's Role":
-				console.log("In Update an Employee's Role");
+				getEmployees().then((dbData) => {
+					promptUpdateEmployee(dbData);
+				});
 				break;
 		}
 	});
@@ -88,6 +92,19 @@ const promptAddEmployee = (dbData) => {
 		})
 		.then(() => {
 			console.log("New Employee added to the database successfully!");
+			promptActions();
+		});
+};
+
+// prompt to update an employee's role
+const promptUpdateEmployee = (dbData) => {
+	return inquirer
+		.prompt(updateRoleQuestions(dbData))
+		.then((data) => {
+			updateEmployee(data);
+		})
+		.then(() => {
+			console.log("Employee Role successfully updated.");
 			promptActions();
 		});
 };
