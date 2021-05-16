@@ -145,6 +145,15 @@ async function getEmployees() {
 	return dbData;
 }
 
+// --- queries to add new db rows ---
+// query to add a new department
+async function createDepartment(newDepartment) {
+	const sql = `INSERT INTO department (name) VALUES (?)`;
+	const params = [newDepartment.departmentName];
+
+	await db.promise().query(sql, params);
+}
+
 module.exports = {
 	viewDepartments,
 	viewRoles,
@@ -152,4 +161,5 @@ module.exports = {
 	getDepartments,
 	getRoles,
 	getEmployees,
+	createDepartment,
 };

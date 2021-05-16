@@ -14,6 +14,7 @@ const {
 	getDepartments,
 	getRoles,
 	getEmployees,
+	createDepartment,
 } = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
@@ -57,7 +58,11 @@ const promptAddDepartment = (departmentsArray) => {
 	return inquirer
 		.prompt(addDepartmentQuestions(departmentsArray))
 		.then((data) => {
-			console.log(data);
+			createDepartment(data);
+		})
+		.then(() => {
+			console.log("New Department added to database successfully.");
+			promptActions();
 		});
 };
 
