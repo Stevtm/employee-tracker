@@ -59,7 +59,7 @@ const addEmployeeQuestions = (employeesArray) => {
 			type: "list",
 			name: "employeeManager",
 			message: "Who is the employee's manager?",
-			choices: employeesArray,
+			choices: [...employeesArray, "No Manager"],
 		},
 	];
 };
@@ -116,7 +116,7 @@ const updateManagerQuestions = (employeesArray, updateEmployee) => {
 			type: "list",
 			name: "updatedManager",
 			message: "Which manager do you want to assign to the selected employee?",
-			choices: employeesArray,
+			choices: [...employeesArray, "No Manager"],
 			validate: (input) => validateNewManager(updateEmployee),
 		},
 	];
