@@ -79,15 +79,16 @@ async function getDepartments() {
 
 // query to return role titles and an array of departments
 async function getRoles() {
+	let dbData = {};
+
 	// get roles
 	const sql1 = `SELECT role.title FROM role`;
-	let result = {};
 
 	await db
 		.promise()
 		.query(sql1)
 		.then(([rows, fields]) => {
-			result[1] = rows;
+			dbData["roles"] = rows;
 		})
 		.catch(console.log);
 
@@ -98,13 +99,50 @@ async function getRoles() {
 		.promise()
 		.query(sql2)
 		.then(([rows, fields]) => {
-			result[2] = rows.map((row) => {
+			dbData["departments"] = rows.map((row) => {
 				return row.name;
 			});
 		})
 		.catch(console.log);
 
-	return result;
+	return dbData;
+}
+
+// query to return array of role titles and array of employee names
+async function getEmployees() {
+	let dbData = {};
+
+	// get roles
+	const sql1 = `SELECT role.title FROM role`;
+
+	await db
+		.promise()
+		.query(sql1)
+		.then(([rows, fields]) => {
+			dbData["roles"] = rows.map((row) => {
+				return row.title;
+			});
+		})
+		.catch(console.log);
+
+	// get employees
+	const sql2 = `SELECT 
+                    employee.first_name, 
+                    employee.last_name
+                FROM employee`;
+
+	await db
+		.promise()
+		.query(sql2)
+		.then(([rows, fields]) => {
+			dbData["employees"] = rows.map((row) => {
+				return `${row.first_name} ${row.last_name}`;
+			});
+		})
+		.catch(console.log);
+
+	console.log(dbData);
+	return dbData;
 }
 
 module.exports = {
@@ -113,4 +151,5 @@ module.exports = {
 	viewEmployees,
 	getDepartments,
 	getRoles,
+	getEmployees,
 };

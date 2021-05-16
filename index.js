@@ -13,6 +13,7 @@ const {
 	viewDepartments,
 	getDepartments,
 	getRoles,
+	getEmployees,
 } = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
@@ -40,8 +41,9 @@ const promptActions = () => {
 				});
 				break;
 			case "Add an Employee":
-				console.log("In Add an Employee");
-				promptAddEmployee();
+				getEmployees().then((dbData) => {
+					promptAddEmployee(dbData);
+				});
 				break;
 			case "Update an Employee's Role":
 				console.log("In Update an Employee's Role");
@@ -67,13 +69,9 @@ const promptAddRole = (rolesArray) => {
 };
 
 // prompts for new emmployee data
-const promptAddEmployee = () => {
-	// get the list of employees in array format
-
-	return inquirer.prompt(addEmployeeQuestions).then((data) => {
+const promptAddEmployee = (dbData) => {
+	return inquirer.prompt(addEmployeeQuestions(dbData)).then((data) => {
 		const { employeeFirstName: firstName, employeeLastName: lastName } = data;
-		// function to be added here to add the employee to the database (async)
-		console.log(`Added ${firstName} ${lastName} to the database`);
 		console.log(data);
 	});
 };

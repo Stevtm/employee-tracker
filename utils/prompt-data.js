@@ -46,8 +46,8 @@ const addDepartmentQuestions = (departmentsArray) => {
 
 // add role questions
 const addRoleQuestions = (dbData) => {
-	const roles = dbData[1];
-	const departments = dbData[2];
+	const { roles, departments } = dbData;
+
 	return [
 		{
 			type: "input",
@@ -77,39 +77,37 @@ const addRoleQuestions = (dbData) => {
 };
 
 // add employee questions
-const addEmployeeQuestions = (employeesArray) => {
+const addEmployeeQuestions = (dbData) => {
+	const { employees, roles } = dbData;
+
 	return [
 		{
 			type: "input",
 			name: "employeeFirstName",
 			message: "What is the employee's first name?",
-			validate: (input) => validateNotNull(input, "first name"),
+			validate: (input) => {
+				return validateNotNull(input, "first name");
+			},
 		},
 		{
 			type: "input",
 			name: "employeeLastName",
 			message: "What is the employee's last name?",
-			validate: (input) => validateNotNull(input, "last name"),
+			validate: (input) => {
+				return validateNotNull(input, "last name");
+			},
 		},
 		{
 			type: "list",
 			name: "employeeRole",
 			message: "What is the employee's role?",
-			choices: [
-				"Sales Lead",
-				"Salesperson",
-				"Lead Engineer",
-				"Software Engineer",
-				"Account Manager",
-				"Accountant",
-				"Legal Team Lead",
-			],
+			choices: roles,
 		},
 		{
 			type: "list",
 			name: "employeeManager",
 			message: "Who is the employee's manager?",
-			choices: [...employeesArray, "No Manager"],
+			choices: [...employees, "No Manager"],
 		},
 	];
 };
