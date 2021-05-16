@@ -16,6 +16,7 @@ const {
 	getEmployees,
 	createDepartment,
 	createRole,
+	createEmployee,
 } = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
@@ -80,10 +81,15 @@ const promptAddRole = (rolesArray) => {
 
 // prompts for new emmployee data
 const promptAddEmployee = (dbData) => {
-	return inquirer.prompt(addEmployeeQuestions(dbData)).then((data) => {
-		const { employeeFirstName: firstName, employeeLastName: lastName } = data;
-		console.log(data);
-	});
+	return inquirer
+		.prompt(addEmployeeQuestions(dbData))
+		.then((data) => {
+			createEmployee(data);
+		})
+		.then(() => {
+			console.log("New Employee added to the database successfully!");
+			promptActions();
+		});
 };
 
 promptActions();

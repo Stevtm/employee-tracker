@@ -141,7 +141,6 @@ async function getEmployees() {
 		})
 		.catch(console.log);
 
-	console.log(dbData);
 	return dbData;
 }
 
@@ -187,6 +186,56 @@ async function createRole(newRole) {
 	await db.promise().query(sql2, params);
 }
 
+// query to add a new employee
+async function createEmployee(newEmployee) {
+	const {
+		employeeFirstName: first,
+		employeeLastName: last,
+		employeeRole: role,
+		employeeManager: manager_full,
+	} = newEmployee;
+
+	// find the id of the role that the employee belongs to
+	let roleID;
+	const sql1 = `SELECT role.id, role.title FROM role`;
+
+	await db
+		.promise()
+		.query(sql1)
+		.then(([rows, fields]) => {
+			rows.forEach((row) => {
+				if (row.title === role) {
+					roleID = row.id;
+				}
+			});
+		});
+
+	// find the id of the manager that the employee reports to
+	let managerID;
+	const manager = manager_full.split(" ");
+
+	const sql2 = `SELECT employee.id, employee.first_name, employee.last_name
+                    FROM employee`;
+
+	await db
+		.promise()
+		.query(sql2)
+		.then(([rows, fields]) => {
+			rows.forEach((row) => {
+				if (row.first_name == manager[0] && row.last_name == manager[1]) {
+					managerID = row.id;
+				}
+			});
+		});
+
+	// add the new employee to the database
+	const sql3 = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    VALUES (?, ?, ?, ?)`;
+	const params = [first, last, roleID, managerID];
+
+	await db.promise().query(sql3, params);
+}
+
 module.exports = {
 	viewDepartments,
 	viewRoles,
@@ -196,4 +245,5 @@ module.exports = {
 	getEmployees,
 	createDepartment,
 	createRole,
+	createEmployee,
 };
