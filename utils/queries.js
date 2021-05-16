@@ -1,6 +1,7 @@
 const db = require("../db/connection");
 const cTable = require("console.table");
 
+// --- queries for displaying table data ---
 // query to view all departments
 async function viewDepartments() {
 	const sql = `SELECT * FROM department`;
@@ -59,4 +60,21 @@ async function viewEmployees() {
 		.catch(console.log);
 }
 
-module.exports = { viewDepartments, viewRoles, viewEmployees };
+// --- queries for fetching db data ---
+// query to return department names
+async function getDepartments() {
+	const sql = `SELECT department.name FROM department`;
+	let result;
+
+	await db
+		.promise()
+		.query(sql)
+		.then(([rows, fields]) => {
+			result = rows;
+		})
+		.catch(console.log);
+
+	return result;
+}
+
+module.exports = { viewDepartments, viewRoles, viewEmployees, getDepartments };

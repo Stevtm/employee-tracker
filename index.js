@@ -1,11 +1,16 @@
 const inquirer = require("inquirer");
 
 // import prompt data and mysql2 queries
-const { actions, addEmployeeQuestions } = require("./utils/prompt-data");
+const {
+	actions,
+	addDepartmentQuestions,
+	addEmployeeQuestions,
+} = require("./utils/prompt-data");
 const {
 	viewEmployees,
 	viewRoles,
 	viewDepartments,
+	getDepartments,
 } = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
@@ -23,7 +28,9 @@ const promptActions = () => {
 				viewEmployees().then(promptActions);
 				break;
 			case "Add a Department":
-				console.log("In Add a Department");
+				getDepartments().then((departments) => {
+					promptAddDepartment(departments);
+				});
 				break;
 			case "Add a Role":
 				console.log("In Add a Role");
@@ -37,6 +44,15 @@ const promptActions = () => {
 				break;
 		}
 	});
+};
+
+// prompts for adding a new department
+const promptAddDepartment = (departmentsArray) => {
+	return inquirer
+		.prompt(addDepartmentQuestions(departmentsArray))
+		.then((data) => {
+			console.log(data);
+		});
 };
 
 // prompts for new emmployee data

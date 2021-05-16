@@ -7,10 +7,24 @@ const validateNotNull = (input, str) => {
 	return true;
 };
 
+const validateNewDepartment = (departmentsArray, newDepartment) => {
+	let response = true;
+
+	departmentsArray.forEach((department) => {
+		if (department.name === newDepartment) {
+			response = false;
+			console.log(" --- This department already exists in the database. ---");
+			return;
+		}
+	});
+
+	return response;
+};
+
 const validateNewRole = (updateEmployee) => {
 	if (updateEmployee.role === updatedRole) {
 		console.log(
-			"Please select a role that is different than the employee's current role. "
+			" --- Please select a role that is different than the employee's current role. ---"
 		);
 		return false;
 	}
@@ -32,4 +46,9 @@ const validateNewManager = (updateEmployee) => {
 	return true;
 };
 
-module.exports = { validateNotNull, validateNewRole, validateNewManager };
+module.exports = {
+	validateNotNull,
+	validateNewDepartment,
+	validateNewRole,
+	validateNewManager,
+};

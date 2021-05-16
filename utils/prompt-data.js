@@ -1,6 +1,7 @@
 // import input validation functions
 const {
 	validateNotNull,
+	validateNewDepartment,
 	validateNewRole,
 	validateNewManager,
 } = require("./input-validation");
@@ -24,6 +25,23 @@ const actions = [
 		default: "View All Employees",
 	},
 ];
+
+// add department questions
+const addDepartmentQuestions = (departmentsArray) => {
+	return [
+		{
+			type: "input",
+			name: "departmentName",
+			message: "What is the department's name?",
+			validate: (input) => {
+				return (
+					validateNotNull(input, "department name") &&
+					validateNewDepartment(departmentsArray, input)
+				);
+			},
+		},
+	];
+};
 
 // add employee questions
 const addEmployeeQuestions = (employeesArray) => {
@@ -124,6 +142,7 @@ const updateManagerQuestions = (employeesArray, updateEmployee) => {
 // export arrays
 module.exports = {
 	actions,
+	addDepartmentQuestions,
 	addEmployeeQuestions,
 	removeEmployeeQuestions,
 	getUpdateEmployee,
