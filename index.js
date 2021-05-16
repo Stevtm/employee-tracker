@@ -2,21 +2,24 @@ const inquirer = require("inquirer");
 
 // import prompt data and mysql2 queries
 const { actions, addEmployeeQuestions } = require("./utils/prompt-data");
-const { viewEmployees, viewDepartments } = require("./utils/queries");
+const {
+	viewEmployees,
+	viewRoles,
+	viewDepartments,
+} = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
 const promptActions = () => {
 	return inquirer.prompt(actions).then((data) => {
 		switch (data.action) {
 			case "View All Departments":
-				console.log("In View all Departments");
 				viewDepartments().then(promptActions);
 				break;
 			case "View All Roles":
 				console.log("In View All Roles");
+				viewRoles().then(promptActions);
 				break;
 			case "View All Employees":
-				console.log("In View all Employees");
 				viewEmployees().then(promptActions);
 				break;
 			case "Add a Department":
