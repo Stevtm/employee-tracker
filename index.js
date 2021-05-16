@@ -2,38 +2,37 @@ const inquirer = require("inquirer");
 
 // import prompt data and mysql2 queries
 const { actions, addEmployeeQuestions } = require("./utils/prompt-data");
-const { viewAllEmployees } = require("./utils/queries");
+const {
+	viewAllEmployees,
+	viewAllEmployeesByDepartment,
+} = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
 const promptActions = () => {
 	return inquirer.prompt(actions).then((data) => {
 		switch (data.action) {
+			case "View All Departments":
+				console.log("In View all Departments");
+				break;
+			case "View All Roles":
+				console.log("In View All Roles");
+				break;
 			case "View All Employees":
 				console.log("In View all Employees");
 				viewAllEmployees().then(promptActions);
-				// promptActions();
 				break;
-			case "View All Employees by Department":
-				console.log("In View All Employees by Department");
+			case "Add a Department":
+				console.log("In Add a Department");
 				break;
-			case "View All Employees by Manager":
-				console.log("In View All Employees by Manager");
+			case "Add a Role":
+				console.log("In Add a Role");
 				break;
 			case "Add an Employee":
 				console.log("In Add an Employee");
 				promptAddEmployee();
 				break;
-			case "Remove an Employee":
-				console.log("In Remove an Employee");
-				break;
 			case "Update an Employee's Role":
 				console.log("In Update an Employee's Role");
-				break;
-			case "Update an Employee's Manager":
-				console.log("In Update an Employee's Manager");
-				break;
-			case "View all Roles":
-				console.log("In View all Roles");
 				break;
 		}
 	});

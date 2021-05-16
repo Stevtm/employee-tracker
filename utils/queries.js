@@ -25,4 +25,6 @@ async function viewAllEmployees() {
 		.catch(console.log);
 }
 
-module.exports = { viewAllEmployees };
+async function viewDepartments() {}
+
+module.exports = { viewAllEmployees, viewAllEmployeesByDepartment };
