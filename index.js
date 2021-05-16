@@ -6,8 +6,32 @@ const { actions, addEmployeeQuestions } = require("./utils/prompt-data");
 // prompt that asks the user which action they would like to take
 const promptActions = () => {
 	return inquirer.prompt(actions).then((data) => {
-		if (data.action === "Add an Employee") {
-			return promptAddEmployee();
+		switch (data.action) {
+			case "View All Employees":
+				console.log("In View all Employees");
+				break;
+			case "View All Employees by Department":
+				console.log("In View All Employees by Department");
+				break;
+			case "View All Employees by Manager":
+				console.log("In View All Employees by Manager");
+				break;
+			case "Add an Employee":
+				console.log("In Add an Employee");
+				promptAddEmployee();
+				break;
+			case "Remove an Employee":
+				console.log("In Remove an Employee");
+				break;
+			case "Update an Employee's Role":
+				console.log("In Update an Employee's Role");
+				break;
+			case "Update an Employee's Manager":
+				console.log("In Update an Employee's Manager");
+				break;
+			case "View all Roles":
+				console.log("In View all Roles");
+				break;
 		}
 	});
 };
