@@ -154,6 +154,39 @@ async function createDepartment(newDepartment) {
 	await db.promise().query(sql, params);
 }
 
+// query to add a new role
+async function createRole(newRole) {
+	const {
+		roleTitle: title,
+		roleSalary: salary,
+		roleDepartment: department,
+	} = newRole;
+
+	// find the id of the department that the role belongs to
+	let departmentID;
+	const sql1 = `SELECT * FROM department`;
+
+	await db
+		.promise()
+		.query(sql1)
+		.then(([rows, fields]) => {
+			rows.forEach((row) => {
+				if (row.name === department) {
+					departmentID = row.id;
+				}
+			});
+		});
+
+	console.log("DEP ID", departmentID);
+
+	// add the new role to the database
+	const sql2 = `INSERT INTO role (title, salary, department_id)
+                VALUES (?, ?, ?)`;
+	const params = [title, salary, departmentID];
+
+	await db.promise().query(sql2, params);
+}
+
 module.exports = {
 	viewDepartments,
 	viewRoles,
@@ -162,4 +195,5 @@ module.exports = {
 	getRoles,
 	getEmployees,
 	createDepartment,
+	createRole,
 };
