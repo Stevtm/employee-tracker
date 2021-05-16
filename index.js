@@ -1,7 +1,8 @@
 const inquirer = require("inquirer");
 
-// import methods
+// import prompt data and mysql2 queries
 const { actions, addEmployeeQuestions } = require("./utils/prompt-data");
+const { viewAllEmployees } = require("./utils/queries");
 
 // prompt that asks the user which action they would like to take
 const promptActions = () => {
@@ -9,6 +10,8 @@ const promptActions = () => {
 		switch (data.action) {
 			case "View All Employees":
 				console.log("In View all Employees");
+				viewAllEmployees().then(promptActions);
+				// promptActions();
 				break;
 			case "View All Employees by Department":
 				console.log("In View All Employees by Department");
