@@ -45,10 +45,15 @@ To install the application:
 
 1. Fork the repository
 2. Execute `npm install` in the command line
-3. In the MySQL shell, execute the following commands. This will set up the database.
-   a. `SOURCE db/db.sql;`
-   b. `SOURCE db/schema.sql;`
-   c. (Optional) `SOURCE db/seeds.sql;`
+3. Create `.env` and populate it with the following process variables:
+   i. `HOST = localhost`
+   ii. `MYSQL_USER =` Your MySQL Username
+   iii. `MYSQL_PASS =` Your MySQL Password
+   iv. `MYSQL_BD = employee_tracker`
+4. In the MySQL shell, execute the following commands. This will set up the database.
+   i. `SOURCE db/db.sql;`
+   ii. `SOURCE db/schema.sql;`
+   iii. (Optional) `SOURCE db/seeds.sql;`
 
 ## Usage
 
