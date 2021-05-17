@@ -29,7 +29,6 @@ const promptActions = () => {
 				viewDepartments().then(promptActions);
 				break;
 			case "View All Roles":
-				console.log("In View All Roles");
 				viewRoles().then(promptActions);
 				break;
 			case "View All Employees":
