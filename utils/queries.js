@@ -176,8 +176,6 @@ async function createRole(newRole) {
 			});
 		});
 
-	console.log("DEP ID", departmentID);
-
 	// add the new role to the database
 	const sql2 = `INSERT INTO role (title, salary, department_id)
                 VALUES (?, ?, ?)`;
